@@ -18,27 +18,114 @@ var factorial = function(n) {
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
+
+/*
+  I - array
+  O - a number, the sum
+  C -
+  E - should return a number
+    - should return the sum of non-negative intergers
+    - should return the sum of an array with negative intergers
+    - should return sum of mixed integers
+    - should return 0 for empty array
+
+    strategy
+    smallest piece of data: numbers
+*/
 var sum = function(array) {
+  if (array.length === 0) {
+    return 0;
+  }
+
+  if (array.length === 1) {
+    return array[0];
+  } else {
+    return array[0] + sum(array.slice(1));
+  }
+
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
+
+/*
+  I - an array of potentially nested arrays
+  O - sum of all of the integers
+  C -
+  E - should return 0 for an empty array
+    - should accepted an array with a signle integer
+
+    need to find a way to iterate inside of the nested arrays in order to get to the integers
+
+*/
 var arraySum = function(array) {
+  if (array.length === 0) {
+    return 0;
+  }
+  var sum = 0;
+  array.forEach(function (item) {
+    if(!Array.isArray(item)) {
+      sum += item;
+    } else {
+      sum += arraySum(item);
+    }
+  });
+  return sum;
 };
 
 // 4. Check if a number is even.
+/*
+  I - number
+  O - boolean
+  C -
+  E -  returns boolean
+    -
+*/
 var isEven = function(n) {
+  n = Math.abs(n);
+  if (n === 1) {
+    return false;
+  } else if (n === 0) {
+    return true;
+  }
+  return n = isEven(n - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
+/*
+  I - number
+  O - sum of all of the numbers exlcusive of n
+  C -
+  E -
+    - must pass for negatives too
+*/
 var sumBelow = function(n) {
+  if (n === 0) {
+    return n
+  } else  if (n > 0) {
+    return (n - 1) + sumBelow(n - 1);
+  } else  if (n < 0) {
+    return (n + 1) + sumBelow(n + 1);
+  }
 };
 
+// sumBelow(-6);
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
+/*
+  I - 2 numbers
+  O - an array of the numbers between the inputs
+  C -
+  E -
+*/
 var range = function(x, y) {
+  var arr = [];
+  if (x === y) {
+    arr.push(x);
+  }
+  return arr;
 };
 
 // 7. Compute the exponent of a number.
