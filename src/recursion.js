@@ -31,6 +31,7 @@ var factorial = function(n) {
 
     strategy
     smallest piece of data: numbers
+    adding the number that the funciton above it returns
 */
 var sum = function(array) {
   if (array.length === 0) {
@@ -121,11 +122,20 @@ var sumBelow = function(n) {
   E -
 */
 var range = function(x, y) {
-  var arr = [];
-  if (x === y) {
-    arr.push(x);
-  }
-  return arr;
+  var result = [];
+  var bigger;
+  var smaller;
+if (x > y) {
+  bigger = x;
+  smaller = y;
+} else if (y > x) {
+  bigger = y;
+  smaller = x;
+}
+
+if (x === y) {
+  return result;
+}
 };
 
 // 7. Compute the exponent of a number.
@@ -133,7 +143,29 @@ var range = function(x, y) {
 // 8^2 = 8 x 8 = 64. Here, 8 is the base and 2 is the exponent.
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
+/*
+  I - 2 arguments, base and exponent
+  O - a single number, being base to the power of exp
+  c -
+  E -
+*/
+
+
 var exponent = function(base, exp) {
+  //base case
+  if (exp === 0) {
+    return 1;
+  }
+  if (exp < 0) {
+    return 1 / (exponent(base, -1 * exp));
+  }
+  if (exp % 2 === 0) {
+    var y = exponent(base, exp/2);
+    return y * y;
+  }
+  if (exp % 2 !== 0) {
+    return base * exponent(base, exp - 1);
+  }
 };
 
 // 8. Determine if a number is a power of two.
@@ -141,6 +173,13 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if (n === 1) {
+    return true;
+  } else if (n > 1) {
+    return powerOfTwo(n/2);
+  } else {
+    return false;
+  }
 };
 
 // 9. Write a function that reverses a string.
