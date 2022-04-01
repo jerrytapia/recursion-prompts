@@ -122,20 +122,14 @@ var sumBelow = function(n) {
   E -
 */
 var range = function(x, y) {
-  var result = [];
-  var bigger;
-  var smaller;
-if (x > y) {
-  bigger = x;
-  smaller = y;
-} else if (y > x) {
-  bigger = y;
-  smaller = x;
-}
-
-if (x === y) {
-  return result;
-}
+  if (x === y || x + 1 === y|| x - 1 === y) {
+    return [];
+  }
+  if (x < y) {
+    return [x + 1].concat(range(x + 1, y));
+  } else {
+    return [x - 1].concat(range(x - 1, y));
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -184,10 +178,28 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  if (string.length === 0) {
+    return '';
+  }
+  return reverse(string.slice(1)) + string[0];
 };
 
 // 10. Write a function that determines if a string is a palindrome.
+
+/*
+  I - string
+  O - boolean, either true or false depending on whether the string is a palindrome
+  C -
+  E -
+*/
 var palindrome = function(string) {
+  if (string.length === 1 || string.length === 0) {
+    return true;
+  }
+  if (string[0].toLowerCase() === string[string.length - 1].toLowerCase()) {
+    return palindrome(string.slice(1, -1));
+  }
+  return false;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -258,22 +270,83 @@ var rMap = function(array, callback) {
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
-// var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
+/* var obj = {
+  'e':{
+    'x':'y'
+  },
+  't':{
+    'r':{
+      'e':'r'
+    },
+    'p':{
+      'y':'r'
+    }
+  },
+  'y':'e'
+};
+*/
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+  var count = 0;
+  for (var objKey in obj) {
+    if (objKey === key) {
+      count++;
+    }
+    var value = obj[objKey];
+    if (typeof value === 'object') {
+      count += countKeysInObj(value, key);
+    }
+  }
+  return count;
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
-// var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
+/*
+var obj = {
+  'e':{
+    'x':'y'
+  },
+  't':{
+    'r':{
+      'e':'r'
+    },
+    'p':{
+      'y':'r'
+    }
+  },
+  'y':'e'
+};
+
+*/
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+  var count = 0;
+  for (var key in obj) {
+    if (obj[key] === value) {
+      count++
+    }
+    if (typeof obj[key] === 'object') {
+      count += countValuesInObj(obj[key], value);
+    }
+  }
+  return count;
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+  for (var key in obj) {
+    if (typeof obj[key] === 'object') {
+      obj[key] = replaceKeysInObj(obj[key], oldKey, newKey);
+    }
+    if (key === oldKey) {
+      obj[newKey] = obj[key];
+      delete obj[key];
+    }
+  }
+  return obj;
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
